@@ -31,7 +31,7 @@ void StartSoftwareWidget::initVariables()
     softwareURL.append(":/images/u0_state0.jpg");
 
     softwareName.append("aaa");
-    softwareIcon.append("C:/Users/19466/Desktop/a/u10.svg");
+    softwareIcon.append(":/images/a3.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
     softwareName.append("管理系统");
@@ -124,8 +124,8 @@ void StartSoftwareWidget::initMiddle()
         QLabel *backgroundLabel = new QLabel(frame);
         backgroundLabel->setGeometry(0, 0, frameWidth, 300);
 
-        QSvgRenderer backgroundRenderer(QString("C:/Users/19466/Desktop/a/u8.svg"));
-        QPixmap backgroundPixmap(backgroundRenderer.defaultSize());  // 使用实际的尺寸初始化 QPixmap
+        QSvgRenderer backgroundRenderer(QString(":/images/u8.svg"));
+        QPixmap backgroundPixmap(backgroundRenderer.defaultSize());
         backgroundPixmap.fill(Qt::transparent);  // 填充透明背景
         QPainter backgroundPainter(&backgroundPixmap);
         backgroundRenderer.render(&backgroundPainter);  // 渲染 SVG
