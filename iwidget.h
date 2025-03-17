@@ -1,4 +1,4 @@
-#ifndef IWIDGET_H
+﻿#ifndef IWIDGET_H
 #define IWIDGET_H
 
 #include <QWidget>

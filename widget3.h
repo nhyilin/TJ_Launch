@@ -1,4 +1,4 @@
-#ifndef WIDGET3_H
+﻿#ifndef WIDGET3_H
 #define WIDGET3_H
 #include "iwidget.h"
 #include <QWidget>
