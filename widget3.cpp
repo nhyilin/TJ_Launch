@@ -16,7 +16,7 @@ void Widget3::initMiddle()
 {
 
     QLabel *label = new QLabel(this);
-    QMovie *movie = new QMovie("C:/Users/19466/Desktop/aaa.gif");
+    QMovie *movie = new QMovie(":/images/aaa.gif");
 
     if (!movie->isValid()) {
         qDebug() << "Failed to load GIF!";
@@ -28,7 +28,7 @@ void Widget3::initMiddle()
     movie->start();
 /*
     // 加载 SVG 图像
-    QSvgRenderer renderer(QString("C:/Users/19466/Desktop/a/u10.svg"));
+    QSvgRenderer renderer(QString(":/images/u10.svg"));
 
     QSize svgSize = renderer.defaultSize();  // 获取 SVG 图像的默认尺寸
     QPixmap pixmap(svgSize*2);  // 使用实际的尺寸初始化 QPixmap
