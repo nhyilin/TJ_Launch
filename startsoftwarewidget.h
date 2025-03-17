@@ -1,4 +1,4 @@
-#ifndef STARTSOFTWAREWIDGET_H
+﻿#ifndef STARTSOFTWAREWIDGET_H
 #define STARTSOFTWAREWIDGET_H
 
 #include <QWidget>

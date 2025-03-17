@@ -1,4 +1,4 @@
-#include "startsoftwarewidget.h"
+﻿#include "startsoftwarewidget.h"
 #include "ui_startsoftwarewidget.h"
 
 StartSoftwareWidget::StartSoftwareWidget(QWidget *parent)

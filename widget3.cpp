@@ -1,10 +1,11 @@
-#include "widget3.h"
+﻿#include "widget3.h"
 #include "ui_widget3.h"
 #include <QApplication>
 #include <QLabel>
 #include <QSvgRenderer>
 #include <QPixmap>
 #include <QPainter>
+#include <QDebug>
 Widget3::Widget3(QWidget *parent)
     : IWidget(parent)
     , ui(new Ui::Widget3)
