@@ -1,19 +1,26 @@
-﻿#ifndef WIDGET3_H
-#define WIDGET3_H
+#ifndef WIDGET4_H
+#define WIDGET4_H
 #include "iwidget.h"
+
 #include <QWidget>
+#include <QApplication>
+#include <QLabel>
+#include <QSvgRenderer>
+#include <QPixmap>
+#include <QPainter>
+#include <QDebug>
 
 namespace Ui {
-class Widget3;
+class Widget4;
 }
 
-class Widget3 : public IWidget
+class Widget4 : public IWidget
 {
     Q_OBJECT
 
 public:
-    explicit Widget3(QWidget *parent = nullptr);
-    ~Widget3();
+    explicit Widget4(QWidget *parent = nullptr);
+    ~Widget4();
 
     virtual void initMiddle();
     virtual void initVariables();
@@ -45,7 +52,7 @@ private:    // middle 参数
     QVector<QString> softwareFileName;  // .exe 文件名
     QVector<QString> softwareURL;   // .exe 路径
 private:
-    Ui::Widget3 *ui;
+    Ui::Widget4 *ui;
 };
 
-#endif // WIDGET3_H
+#endif // WIDGET4_H

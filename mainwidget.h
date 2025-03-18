@@ -3,7 +3,7 @@
 
 #include "iwidget.h"
 #include "startsoftwarewidget.h"
-#include "widget3.h"
+#include "widget4.h"
 
 #include <QWidget>
 
@@ -65,6 +65,7 @@ private:
     QStackedWidget *stackedWidget;      //存放界面
     IWidget* startSoftwareWidget;       //界面1
     IWidget* widget3;                   //测试界面2
+    IWidget* widget4;                   //测试界面2
 
 private:    // top 参数
     QLabel *u2ImageLabel;  // 用于显示图片
