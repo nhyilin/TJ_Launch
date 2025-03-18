@@ -29,6 +29,10 @@
 #include <QStackedWidget>
 #include <QSvgRenderer>
 
+#include <QScreen>
+#include <QResizeEvent>
+#include <QFont>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -46,25 +50,27 @@ public:
     ~MainWidget();
 
 public:
-    void showEvent(QShowEvent *event);  // 初始化背景
+    //void showEvent(QShowEvent *event);  // 初始化背景
+    void resizeEvent(QResizeEvent *event);
+    //void paintEvent(QPaintEvent *event);
+
     void initVariables();   // 初始化参数
     void initTop();
 
     void initBottom();
-    void initLeft();
-
-public:
-
+    void initMiddle();
 
 private:
     Ui::MainWidget *ui;
-    QStackedWidget *stackedWidget;
-    IWidget* startSoftwareWidget;
-    IWidget* widget3;
+    QStackedWidget *stackedWidget;      //存放界面
+    IWidget* startSoftwareWidget;       //界面1
+    IWidget* widget3;                   //测试界面2
 
 private:    // top 参数
     QLabel *u2ImageLabel;  // 用于显示图片
     QLabel *titleLabel;   // 用于显示文字
+    QLabel *titlelabel_1;  // 声明 titlelabel_1
+    QLabel *titlelabel_2;  // 声明 titlelabel_2
 
 private:    //left 参数
     QVector<QPushButton*> changePushButton;
@@ -73,6 +79,7 @@ private:    //left 参数
 
 private:    //bottom 参数
     QVector<QString> bottomFunctionButton;
+
 
 };
 #endif // MAINWIDGET_H
