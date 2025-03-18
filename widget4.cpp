@@ -1,21 +1,16 @@
-﻿#include "widget3.h"
-#include "ui_widget3.h"
-#include <QApplication>
-#include <QLabel>
-#include <QSvgRenderer>
-#include <QPixmap>
-#include <QPainter>
-#include <QDebug>
-Widget3::Widget3(QWidget *parent)
+#include "widget4.h"
+#include "ui_widget4.h"
+
+Widget4::Widget4(QWidget *parent)
     : IWidget(parent)
-    , ui(new Ui::Widget3)
+    , ui(new Ui::Widget4)
 {
     ui->setupUi(this);
     initVariables();
     initMiddle();
 }
 
-void Widget3::initVariables()
+void Widget4::initVariables()
 {
     // ====== 初始化软件描述 ======
     softwareName.append("1111111");
@@ -65,7 +60,7 @@ void Widget3::initVariables()
     scrollAreaHeight = 500;   // 滚动区域高度
 }
 
-void Widget3::initMiddle()
+void Widget4::initMiddle()
 {
 
 
@@ -89,7 +84,7 @@ void Widget3::initMiddle()
     frameLeftButton->setGeometry(15, 20, 10, 20);  // 设置矩形框的大小和位置
     frameLeftButton->setStyleSheet("border: 2px solid rgba(173, 216, 230, 150);");  // 设置蓝色边框
     frameLeftButton->show();
-    connect(leftButton, &QPushButton::clicked, this, &Widget3::scrollLeft);
+    connect(leftButton, &QPushButton::clicked, this, &Widget4::scrollLeft);
 
 
 
@@ -110,7 +105,7 @@ void Widget3::initMiddle()
     frameRightButton->setGeometry(15, 20, 10, 20);  // 设置矩形框的大小和位置
     frameRightButton->setStyleSheet("border: 2px solid rgba(173, 216, 230, 150);");  // 设置蓝色边框
     frameRightButton->show();
-    connect(rightButton, &QPushButton::clicked, this, &Widget3::scrollRight);
+    connect(rightButton, &QPushButton::clicked, this, &Widget4::scrollRight);
 
     // ========== 滚动区域 ==========
     scrollArea = new QScrollArea(ui->frame);
@@ -219,7 +214,7 @@ void Widget3::initMiddle()
 
 
 // ========== 捕获系统描述框 ==========
-bool Widget3::eventFilter(QObject *watched, QEvent *event)
+bool Widget4::eventFilter(QObject *watched, QEvent *event)
 {
 
     if (event->type() == QEvent::Enter) {
@@ -245,7 +240,7 @@ bool Widget3::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 // ========== 向左滚动 ==========
-void Widget3::scrollLeft()
+void Widget4::scrollLeft()
 {
     int remainingFrames = currentIndex;
     if (remainingFrames >= 4) {
@@ -258,7 +253,7 @@ void Widget3::scrollLeft()
 }
 
 // ========== 向右滚动 ==========
-void Widget3::scrollRight()
+void Widget4::scrollRight()
 {
     int remainingFrames = totalFrames - visibleFrames - currentIndex;
     if (remainingFrames >= 4) {
@@ -272,7 +267,7 @@ void Widget3::scrollRight()
 
 
 // ========== 创建动画 ==========
-void Widget3::smoothScrollTo(int targetPosition)
+void Widget4::smoothScrollTo(int targetPosition)
 {
     QPropertyAnimation *animation = new QPropertyAnimation(scrollArea->horizontalScrollBar(), "value");
     animation->setDuration(400);
@@ -282,9 +277,10 @@ void Widget3::smoothScrollTo(int targetPosition)
     animation->start(QAbstractAnimation::DeleteWhenStopped);  // 启动动画，动画结束时自动删除
 }
 
-
-
-Widget3::~Widget3()
+Widget4::~Widget4()
 {
     delete ui;
 }
+
+
+

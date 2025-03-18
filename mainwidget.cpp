@@ -94,15 +94,15 @@ void MainWidget::initMiddle()
 
     // 界面初始化
     startSoftwareWidget = new StartSoftwareWidget();
-    widget3 = new Widget3();
+    widget4 = new Widget4();
 
     // 界面入栈
     stackedWidget->addWidget(startSoftwareWidget);
-    stackedWidget->addWidget(widget3);
+    stackedWidget->addWidget(widget4);
 
     // 多态：存储子类界面的容器
     changeWidget.append(startSoftwareWidget);
-    changeWidget.append(widget3);
+    changeWidget.append(widget4);
 
     // 设置当前界面
     stackedWidget->setCurrentWidget(startSoftwareWidget);
@@ -168,7 +168,7 @@ void MainWidget::initMiddle()
     });
 
     connect(button2, &QPushButton::clicked, this, [=]() {
-        stackedWidget->setCurrentWidget(widget3);  // 切换到界面 2
+        stackedWidget->setCurrentWidget(widget4);  // 切换到界面 2
     });
 
 
