@@ -40,10 +40,8 @@ public:
     ~StartSoftwareWidget();
 
 public:
-
-    void initVariables();
-
     virtual void initMiddle();
+    virtual void initVariables();
 
     bool eventFilter(QObject *watched, QEvent *event);  // 捕获系统描述框
 
@@ -66,7 +64,10 @@ private:    // middle 参数
     int currentIndex;   // 当前第一个可见方框索引
     int totalFrames;    // 总方框数量
     int visibleFrames;    // 每次可见的方框数量
-    int frameWidth;    // 每个方框的宽度
+    int frameWidth;    // 方框的宽度
+    int frameHeight;        // 每个系统描述框的高度
+    int scrollAreaWidth;   // 滚动区域宽度
+    int scrollAreaHeight;   // 滚动区域高度
 
     QVector<QString> softwareName;  // 软件名
     QVector<QString> softwareIcon;  // 软件图标

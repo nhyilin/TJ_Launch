@@ -12,10 +12,6 @@ StartSoftwareWidget::StartSoftwareWidget(QWidget *parent)
 
 void StartSoftwareWidget::initVariables()
 {
-    currentIndex = 0;   // 当前第一个可见方框索引
-    totalFrames = 9;    // 总方框数量
-    visibleFrames = 4;  // 每次可见的方框数量
-    frameWidth = 220;   // 每个方框的宽度
 
     // ====== 初始化软件描述 ======
     softwareName.append("软件1");
@@ -54,10 +50,24 @@ void StartSoftwareWidget::initVariables()
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
+    // ====== 初始化参数列表 ======
+    currentIndex = 0;   // 当前第一个可见方框索引
+    totalFrames = softwareName.size();    // 总方框数量
+    visibleFrames = 4;  // 每次可见的方框数量
+    frameWidth = 250;   // 每个方框的宽度
+    frameHeight = 350;        // 每个系统描述框的高度
+    scrollAreaWidth = (frameWidth+30)*4;   // 滚动区域宽度
+    scrollAreaHeight = 500;   // 滚动区域高度
+    /*
+    currentIndex = 0;   // 当前第一个可见方框索引
+    //totalFrames = 9;    // 总方框数量
+    visibleFrames = 4;  // 每次可见的方框数量
+    frameWidth = 220;   // 每个方框的宽度*/
 }
 
 void StartSoftwareWidget::initMiddle()
 {
+
 
     QVBoxLayout *mainLayout = new QVBoxLayout(ui->frame);
     mainLayout->setSpacing(10);
@@ -104,7 +114,7 @@ void StartSoftwareWidget::initMiddle()
 
     // ========== 滚动区域 ==========
     scrollArea = new QScrollArea(ui->frame);
-    scrollArea->setFixedSize(1000, 500);
+    scrollArea->setFixedSize(scrollAreaWidth, scrollAreaHeight);
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scrollArea->setStyleSheet("QScrollArea { background: transparent; border: none; }");
@@ -114,83 +124,83 @@ void StartSoftwareWidget::initMiddle()
     layout = new QHBoxLayout(scrollWidget);
     layout->setSpacing(35);
 
-    // ========== 添加 totalFrames 个系统描述框 ==========
     for (int i = 0; i < totalFrames; ++i) {
         QFrame *frame = new QFrame(scrollWidget);
-        frame->setFixedSize(frameWidth, 300);
+        frame->setFixedSize(frameWidth, frameHeight);
         frame->setStyleSheet("border: none;");
 
-        // ========== 设置背景图片 ==========
+        // ========== 背景图片 ==========
         QLabel *backgroundLabel = new QLabel(frame);
-        backgroundLabel->setGeometry(0, 0, frameWidth, 300);
-
-        QSvgRenderer backgroundRenderer(QString(":/images/u8.svg"));
-        QPixmap backgroundPixmap(backgroundRenderer.defaultSize());
-        backgroundPixmap.fill(Qt::transparent);  // 填充透明背景
-        QPainter backgroundPainter(&backgroundPixmap);
-        backgroundRenderer.render(&backgroundPainter);  // 渲染 SVG
-        backgroundLabel->setPixmap(backgroundPixmap.scaled(frameWidth, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        backgroundLabel->setGeometry(0, 0, frameWidth, frameHeight);
+        QPixmap backgroundPixmap(":/images/u8.jpg");
+        backgroundLabel->setPixmap(backgroundPixmap.scaled(frameWidth, frameHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         backgroundLabel->setStyleSheet("background: transparent;");
         backgroundLabel->lower();
         backgroundLabel->show();
-/*
-        QPixmap backgroundPixmap(":/images/u8.jpg");
-        backgroundLabel->setPixmap(backgroundPixmap.scaled(frameWidth, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        backgroundLabel->setStyleSheet("background: transparent;");
-        backgroundLabel->lower();
-*/
-        // ========== 显示系统图标 ==========
+
+        // ========== 创建垂直布局 ==========
+        QVBoxLayout *vLayout = new QVBoxLayout(frame);
+        vLayout->setAlignment(Qt::AlignCenter);  // **让所有控件整体居中**
+        vLayout->setSpacing(10);  // 控件之间的间距
+
+        // ========== 系统图标 ==========
         QLabel *iconLabel = new QLabel(frame);
         QString imagePath = softwareIcon[i];
 
         QSvgRenderer renderer(imagePath);
-        QPixmap pixmap(renderer.defaultSize()*2);
-        pixmap.fill(Qt::transparent);  // 填充透明背景
+        QPixmap pixmap(renderer.defaultSize() * 3);
+        pixmap.fill(Qt::transparent);
         QPainter painter(&pixmap);
-        renderer.render(&painter);  // 渲染 SVG
+        renderer.render(&painter);
         iconLabel->setPixmap(pixmap);
-        iconLabel->setFixedSize(pixmap.size());  // 设置 QLabel 的大小
+        iconLabel->setFixedSize(pixmap.size());
         iconLabel->setAlignment(Qt::AlignCenter);
-        iconLabel->setGeometry((frameWidth - pixmap.width()) / 2, 50, pixmap.width(), pixmap.height());
-        iconLabel->show();
 
-        // ========== 设置 name 标签 ==========
+        vLayout->addWidget(iconLabel, 0, Qt::AlignCenter);  // **让图标水平居中**
+
+        // ========== 名称标签 ==========
         QLabel *nameLabel = new QLabel(softwareName[i], frame);
         nameLabel->setAlignment(Qt::AlignCenter);
-        nameLabel->setGeometry(0, 150, frameWidth, 30);
         nameLabel->setFont(QFont("Arial", 15, QFont::Bold));
         nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
+
         QLabel *nameLabel2 = new QLabel(softwareName[i], frame);
         nameLabel2->setAlignment(Qt::AlignCenter);
-        nameLabel2->setGeometry(0, 170, frameWidth, 30);
         nameLabel2->setFont(QFont("Arial", 10, QFont::Bold));
         nameLabel2->setStyleSheet("color: white; background: transparent; border: none;");
 
-        // ========== 设置按钮 ==========
+        vLayout->addWidget(nameLabel, 0, Qt::AlignCenter);  // **让名称居中**
+        vLayout->addWidget(nameLabel2, 0, Qt::AlignCenter);  // **让副名称居中**
+
+        // ========== 进入系统按钮 ==========
         QPushButton *openButton = new QPushButton("进入系统", frame);
-        openButton->setGeometry((frameWidth - 80) / 2, 210, 80, 30);
+        openButton->setFixedSize(80, 30);
         openButton->setStyleSheet(
             "QPushButton {"
             "   color: white;"
             "   background: transparent;"
-            "   border: 2px solid white;"  // 设置边框颜色
-            "   border-radius: 10px;"  // 设置圆角，越大越圆
-            "   padding: 5px 10px;"  // 设置内边距
+            "   border: 2px solid white;"
+            "   border-radius: 10px;"
+            "   padding: 5px 10px;"
             "}"
             "QPushButton:hover {"
-            "   background-color: rgba(255, 255, 255, 0.2);"  // 鼠标悬停时的背景色
+            "   background-color: rgba(255, 255, 255, 0.2);"
             "}"
             "QPushButton:pressed {"
-            "   background-color: rgba(255, 255, 255, 0.3);"  // 鼠标按下时的背景色
-            "   padding-left: 8px; padding-top: 8px;"  // 点击时按钮向下移动的效果
+            "   background-color: rgba(255, 255, 255, 0.3);"
+            "   padding-left: 8px; padding-top: 8px;"
             "}"
             );
-        connect(openButton, &QPushButton::clicked, this, [=](){
+        connect(openButton, &QPushButton::clicked, this, [=]() {
             QProcess::startDetached(softwareURL[i]);
         });
+
+        vLayout->addWidget(openButton, 0, Qt::AlignCenter);  // **让按钮居中**
+
+        frame->setLayout(vLayout);  // **给 frame 设置布局**
         frame->installEventFilter(this);
 
-        layout->addWidget(frame);
+        layout->addWidget(frame);  // 添加到 `QHBoxLayout` 中
     }
     scrollWidget->setLayout(layout);
     scrollArea->setWidget(scrollWidget);
