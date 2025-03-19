@@ -13,7 +13,6 @@
 #include <QPalette>
 #include <QPainter>
 #include <QPixmap>
-
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QScrollArea>

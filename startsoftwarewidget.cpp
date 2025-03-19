@@ -13,6 +13,7 @@ StartSoftwareWidget::StartSoftwareWidget(QWidget *parent)
 void StartSoftwareWidget::initVariables()
 {
 
+
     // ====== 初始化软件描述 ======
     softwareName.append("软件1");
     softwareIcon.append(":/images/a1.jpg");

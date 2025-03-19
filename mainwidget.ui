@@ -25,8 +25,8 @@
    <widget class="QFrame" name="functionFrame_2">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>20</y>
+      <x>390</x>
+      <y>30</y>
       <width>731</width>
       <height>141</height>
      </rect>

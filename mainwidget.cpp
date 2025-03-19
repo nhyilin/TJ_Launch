@@ -35,7 +35,6 @@ MainWidget::MainWidget(QWidget *parent)
     initBottom();
 
 
-
 }
 
 void MainWidget::resizeEvent(QResizeEvent *event)
