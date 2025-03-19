@@ -10,6 +10,7 @@ Widget4::Widget4(QWidget *parent)
     initMiddle();
 }
 
+
 void Widget4::initVariables()
 {
     // ====== 初始化软件描述 ======

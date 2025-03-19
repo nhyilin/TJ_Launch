@@ -8,6 +8,7 @@ IWidget::IWidget(QWidget *parent)
     ui->setupUi(this);
 }
 
+
 IWidget::~IWidget()
 {
     delete ui;

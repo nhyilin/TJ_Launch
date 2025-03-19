@@ -32,6 +32,7 @@ private slots:
     void scrollLeft();   // 左侧滚动
     void scrollRight();  // 右侧滚动
 
+
 private:    // middle 参数
     QScrollArea *scrollArea;  // 滚动区域
     QWidget *scrollWidget;    // 容纳所有方框的滚动容器
