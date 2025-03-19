@@ -1,29 +1,29 @@
-﻿#include "startsoftwarewidget.h"
-#include "ui_startsoftwarewidget.h"
+#include "widget4.h"
+#include "ui_widget4.h"
 
-StartSoftwareWidget::StartSoftwareWidget(QWidget *parent)
+Widget4::Widget4(QWidget *parent)
     : IWidget(parent)
-    , ui(new Ui::StartSoftwareWidget)
+    , ui(new Ui::Widget4)
 {
     ui->setupUi(this);
     initVariables();
     initMiddle();
 }
 
-void StartSoftwareWidget::initVariables()
+void Widget4::initVariables()
 {
-
     // ====== 初始化软件描述 ======
-    softwareName.append("软件1");
-    softwareIcon.append(":/images/a1.jpg");
+    softwareName.append("1111111");
+    softwareIcon.append(":/images/a3.jpg");
     softwareURL.append("D:/WeChat/WeChat.exe");
 
-    softwareName.append("管理系统");
-    softwareIcon.append(":/images/a2.jpg");
+    softwareName.append("222222");
+    softwareIcon.append(":/images/a3.jpg");
     softwareURL.append("D:/Tencent/QQNT/QQ.exe");
 
-    softwareName.append("监控系统");
-    softwareIcon.append(":/images/a3.jpg");
+
+    softwareName.append("3333333");
+    softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
     softwareName.append("aaa");
@@ -58,14 +58,9 @@ void StartSoftwareWidget::initVariables()
     frameHeight = 350;        // 每个系统描述框的高度
     scrollAreaWidth = (frameWidth+30)*4;   // 滚动区域宽度
     scrollAreaHeight = 500;   // 滚动区域高度
-    /*
-    currentIndex = 0;   // 当前第一个可见方框索引
-    //totalFrames = 9;    // 总方框数量
-    visibleFrames = 4;  // 每次可见的方框数量
-    frameWidth = 220;   // 每个方框的宽度*/
 }
 
-void StartSoftwareWidget::initMiddle()
+void Widget4::initMiddle()
 {
 
 
@@ -89,7 +84,7 @@ void StartSoftwareWidget::initMiddle()
     frameLeftButton->setGeometry(15, 20, 10, 20);  // 设置矩形框的大小和位置
     frameLeftButton->setStyleSheet("border: 2px solid rgba(173, 216, 230, 150);");  // 设置蓝色边框
     frameLeftButton->show();
-    connect(leftButton, &QPushButton::clicked, this, &StartSoftwareWidget::scrollLeft);
+    connect(leftButton, &QPushButton::clicked, this, &Widget4::scrollLeft);
 
 
 
@@ -110,7 +105,7 @@ void StartSoftwareWidget::initMiddle()
     frameRightButton->setGeometry(15, 20, 10, 20);  // 设置矩形框的大小和位置
     frameRightButton->setStyleSheet("border: 2px solid rgba(173, 216, 230, 150);");  // 设置蓝色边框
     frameRightButton->show();
-    connect(rightButton, &QPushButton::clicked, this, &StartSoftwareWidget::scrollRight);
+    connect(rightButton, &QPushButton::clicked, this, &Widget4::scrollRight);
 
     // ========== 滚动区域 ==========
     scrollArea = new QScrollArea(ui->frame);
@@ -216,8 +211,10 @@ void StartSoftwareWidget::initMiddle()
     setLayout(mainLayout);
 }
 
+
+
 // ========== 捕获系统描述框 ==========
-bool StartSoftwareWidget::eventFilter(QObject *watched, QEvent *event)
+bool Widget4::eventFilter(QObject *watched, QEvent *event)
 {
 
     if (event->type() == QEvent::Enter) {
@@ -242,10 +239,8 @@ bool StartSoftwareWidget::eventFilter(QObject *watched, QEvent *event)
 
     return QWidget::eventFilter(watched, event);
 }
-
-
 // ========== 向左滚动 ==========
-void StartSoftwareWidget::scrollLeft()
+void Widget4::scrollLeft()
 {
     int remainingFrames = currentIndex;
     if (remainingFrames >= 4) {
@@ -258,7 +253,7 @@ void StartSoftwareWidget::scrollLeft()
 }
 
 // ========== 向右滚动 ==========
-void StartSoftwareWidget::scrollRight()
+void Widget4::scrollRight()
 {
     int remainingFrames = totalFrames - visibleFrames - currentIndex;
     if (remainingFrames >= 4) {
@@ -270,8 +265,9 @@ void StartSoftwareWidget::scrollRight()
     smoothScrollTo(targetPosition);
 }
 
+
 // ========== 创建动画 ==========
-void StartSoftwareWidget::smoothScrollTo(int targetPosition)
+void Widget4::smoothScrollTo(int targetPosition)
 {
     QPropertyAnimation *animation = new QPropertyAnimation(scrollArea->horizontalScrollBar(), "value");
     animation->setDuration(400);
@@ -281,9 +277,10 @@ void StartSoftwareWidget::smoothScrollTo(int targetPosition)
     animation->start(QAbstractAnimation::DeleteWhenStopped);  // 启动动画，动画结束时自动删除
 }
 
-
-
-StartSoftwareWidget::~StartSoftwareWidget()
+Widget4::~Widget4()
 {
     delete ui;
 }
+
+
+

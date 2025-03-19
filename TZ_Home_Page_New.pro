@@ -13,19 +13,19 @@ SOURCES += \
     main.cpp \
     mainwidget.cpp \
     startsoftwarewidget.cpp \
-    widget3.cpp
+    widget4.cpp
 
 HEADERS += \
     iwidget.h \
     mainwidget.h \
     startsoftwarewidget.h \
-    widget3.h
+    widget4.h
 
 FORMS += \
     iwidget.ui \
     mainwidget.ui \
     startsoftwarewidget.ui \
-    widget3.ui
+    widget4.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

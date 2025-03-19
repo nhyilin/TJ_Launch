@@ -1,4 +1,4 @@
-#ifndef IWIDGET_H
+﻿#ifndef IWIDGET_H
 #define IWIDGET_H
 
 #include <QWidget>
@@ -36,7 +36,9 @@ public:
     explicit IWidget(QWidget *parent = nullptr);
     ~IWidget();
 
+    virtual void initVariables() = 0;
     virtual void initMiddle() = 0;
+
 
 private:
     Ui::IWidget *ui;

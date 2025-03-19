@@ -1,4 +1,4 @@
-#ifndef WIDGET2_H
+﻿#ifndef WIDGET2_H
 #define WIDGET2_H
 
 #include "iwidget.h"
