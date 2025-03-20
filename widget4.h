@@ -49,6 +49,7 @@ private:    // middle 参数
     int scrollAreaHeight;   // 滚动区域高度
 
     QVector<QString> softwareName;  // 软件名
+    QVector<QString> softwareEnglishName;  // 软件英文名
     QVector<QString> softwareIcon;  // 软件图标
     QVector<QString> softwareFileName;  // .exe 文件名
     QVector<QString> softwareURL;   // .exe 路径

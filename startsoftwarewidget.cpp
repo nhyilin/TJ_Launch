@@ -15,39 +15,48 @@ void StartSoftwareWidget::initVariables()
 
 
     // ====== 初始化软件描述 ======
-    softwareName.append("软件1");
+    softwareName.append(QString::fromUtf8("电脑系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append("D:/WeChat/WeChat.exe");
 
-    softwareName.append("管理系统");
+    softwareName.append(QString::fromUtf8("水利系统"));
+    softwareEnglishName.append("software2");
     softwareIcon.append(":/images/a2.jpg");
     softwareURL.append("D:/Tencent/QQNT/QQ.exe");
 
-    softwareName.append("监控系统");
+    softwareName.append(QString::fromUtf8("巡航系统"));
+    softwareEnglishName.append("software3");
     softwareIcon.append(":/images/a3.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("aaa");
+    softwareName.append(QString::fromUtf8("cc系统"));
+    softwareEnglishName.append("software4");
     softwareIcon.append(":/images/a3.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("管理系统");
+    softwareName.append(QString::fromUtf8("监控系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("监控系统");
+    softwareName.append(QString::fromUtf8("监控系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("软件1");
+    softwareName.append(QString::fromUtf8("ss系统"));
+    softwareEnglishName.append("software1");
     softwareURL.append(":/images/u0_state0.jpg");
     softwareIcon.append(":/images/a1.jpg");
 
-    softwareName.append("管理系统");
+    softwareName.append(QString::fromUtf8("监控系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("监控系统");
+    softwareName.append(QString::fromUtf8("gg系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
@@ -165,7 +174,7 @@ void StartSoftwareWidget::initMiddle()
         nameLabel->setFont(QFont("Arial", 15, QFont::Bold));
         nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
 
-        QLabel *nameLabel2 = new QLabel(softwareName[i], frame);
+        QLabel *nameLabel2 = new QLabel(softwareEnglishName[i], frame);
         nameLabel2->setAlignment(Qt::AlignCenter);
         nameLabel2->setFont(QFont("Arial", 10, QFont::Bold));
         nameLabel2->setStyleSheet("color: white; background: transparent; border: none;");
@@ -174,7 +183,7 @@ void StartSoftwareWidget::initMiddle()
         vLayout->addWidget(nameLabel2, 0, Qt::AlignCenter);  // **让副名称居中**
 
         // ========== 进入系统按钮 ==========
-        QPushButton *openButton = new QPushButton("进入系统", frame);
+        QPushButton *openButton = new QPushButton(QString::fromUtf8("进入系统"), frame);
         openButton->setFixedSize(80, 30);
         openButton->setStyleSheet(
             "QPushButton {"

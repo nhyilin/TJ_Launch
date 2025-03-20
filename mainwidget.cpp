@@ -9,15 +9,16 @@ MainWidget::MainWidget(QWidget *parent)
     QScreen *screen = QApplication::primaryScreen();
     QRect screenGeometry = screen->availableGeometry();  // 获取可用屏幕尺寸
 
+
     // 设置主窗口的大小为屏幕的 95%
     int width = screenGeometry.width() * 0.99;
     int height = screenGeometry.height() * 0.99;
     this->resize(width, height);
 
     // 设置各个控件的位置和大小（按比例调整）
-    ui->bottomWidget->setGeometry(0, height * 0.75, width, height * 0.25);
+    ui->bottomWidget->setGeometry(0, height * 0.75, width, height * 0.1);
     //ui->leftWidget->setGeometry(0, height * 0.1, width * 0.02, height * 0.65);
-    ui->showWidget->setGeometry(0, height * 0.1, width * 0.98, height * 0.65);
+    ui->showWidget->setGeometry(0, height * 0.1, width * 0.98, height * 0.8);
     ui->topWidget->setGeometry(0, 0, width, height * 0.1);
 
     setWindowTitle("天控首页");
@@ -32,8 +33,7 @@ MainWidget::MainWidget(QWidget *parent)
     initMiddle();
 
     // 初始化界面 下
-    initBottom();
-
+    //initBottom();
 
 }
 
@@ -72,16 +72,16 @@ void MainWidget::initVariables()
     bottomFunctionButton.append("退出登录");
 
     // ====== 左侧按钮 ======
-    changePushButton.append(new QPushButton("界面1"));
+    changePushButton.append(new QPushButton(QString::fromUtf8("界面1")));
     changeButtonIcon.append(":/images/a3.jpg");
 
-    changePushButton.append(new QPushButton("界面2"));
+    changePushButton.append(new QPushButton(QString::fromUtf8("界面2")));
     changeButtonIcon.append(":/images/a3.jpg");
 
-    changePushButton.append(new QPushButton("界面3"));
+    changePushButton.append(new QPushButton(QString::fromUtf8("界面3")));
     changeButtonIcon.append(":/images/a3.jpg");
 
-    changePushButton.append(new QPushButton("界面4"));
+    changePushButton.append(new QPushButton(QString::fromUtf8("界面4")));
     changeButtonIcon.append(":/images/a3.jpg");
 
 
@@ -108,8 +108,8 @@ void MainWidget::initMiddle()
 
     // ====== 添加按钮 =======
     // 创建按钮
-    QPushButton *button1 = new QPushButton("界面 1", ui->showWidget);
-    QPushButton *button2 = new QPushButton("界面 2", ui->showWidget);
+    QPushButton *button1 = new QPushButton(QString::fromUtf8("界面 1"), ui->showWidget);
+    QPushButton *button2 = new QPushButton(QString::fromUtf8("界面 2"), ui->showWidget);
 
     // 设置按钮样式
     button1->setFixedSize(120, 40);

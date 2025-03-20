@@ -14,42 +14,51 @@ Widget4::Widget4(QWidget *parent)
 void Widget4::initVariables()
 {
     // ====== 初始化软件描述 ======
-    softwareName.append("1111111");
-    softwareIcon.append(":/images/a3.jpg");
+    softwareName.append(QString::fromUtf8("监控系统"));
+    softwareEnglishName.append("software1");
+    softwareIcon.append(":/images/a1.jpg");
     softwareURL.append("D:/WeChat/WeChat.exe");
 
-    softwareName.append("222222");
-    softwareIcon.append(":/images/a3.jpg");
+    softwareName.append(QString::fromUtf8("航空系统"));
+    softwareEnglishName.append("software1");
+    softwareIcon.append(":/images/a2.jpg");
     softwareURL.append("D:/Tencent/QQNT/QQ.exe");
 
-
-    softwareName.append("3333333");
-    softwareIcon.append(":/images/a1.jpg");
-    softwareURL.append(":/images/u0_state0.jpg");
-
-    softwareName.append("aaa");
+    softwareName.append(QString::fromUtf8("软件系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a3.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("管理系统");
+    softwareName.append(QString::fromUtf8("aa系统"));
+    softwareEnglishName.append("software1");
+    softwareIcon.append(":/images/a3.jpg");
+    softwareURL.append(":/images/u0_state0.jpg");
+
+    softwareName.append(QString::fromUtf8("bb系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("监控系统");
+    softwareName.append(QString::fromUtf8("监控系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("软件1");
+    softwareName.append(QString::fromUtf8("监控系统"));
+    softwareEnglishName.append("software1");
     softwareURL.append(":/images/u0_state0.jpg");
     softwareIcon.append(":/images/a1.jpg");
 
-    softwareName.append("管理系统");
+    softwareName.append(QString::fromUtf8("dd系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
 
-    softwareName.append("监控系统");
+    softwareName.append(QString::fromUtf8("监控系统"));
+    softwareEnglishName.append("software1");
     softwareIcon.append(":/images/a1.jpg");
     softwareURL.append(":/images/u0_state0.jpg");
+
 
     // ====== 初始化参数列表 ======
     currentIndex = 0;   // 当前第一个可见方框索引
@@ -160,7 +169,7 @@ void Widget4::initMiddle()
         nameLabel->setFont(QFont("Arial", 15, QFont::Bold));
         nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
 
-        QLabel *nameLabel2 = new QLabel(softwareName[i], frame);
+        QLabel *nameLabel2 = new QLabel(softwareEnglishName[i], frame);
         nameLabel2->setAlignment(Qt::AlignCenter);
         nameLabel2->setFont(QFont("Arial", 10, QFont::Bold));
         nameLabel2->setStyleSheet("color: white; background: transparent; border: none;");

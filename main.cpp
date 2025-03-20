@@ -9,7 +9,10 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    // 设置默认语言环境为中文
+    QLocale::setDefault(QLocale(QLocale::Chinese, QLocale::China));
+
 
     QApplication a(argc, argv);
     //StartSoftwareWidget s;
