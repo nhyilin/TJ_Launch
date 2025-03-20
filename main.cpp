@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 
 
     QApplication a(argc, argv);
+    a.setFont(QFont("Microsoft YaHei"));
     //StartSoftwareWidget s;
     //s.show();
     MainWidget w;
