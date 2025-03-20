@@ -109,7 +109,7 @@ void MainWidget::initMiddle()
     // ====== 添加按钮 =======
     // 创建按钮
     QPushButton *button1 = new QPushButton(QString::fromUtf8("界面 1"), ui->showWidget);
-    QPushButton *button2 = new QPushButton(QString::fromUtf8("界面 2"), ui->showWidget);
+    QPushButton *button2 = new QPushButton(QString::fromUtf8("界面 1"), ui->showWidget);
 
     // 设置按钮样式
     button1->setFixedSize(120, 40);
