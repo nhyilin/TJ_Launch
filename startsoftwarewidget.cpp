@@ -1,6 +1,10 @@
 ﻿#include "startsoftwarewidget.h"
 #include "ui_startsoftwarewidget.h"
 
+#if defined(_MSC_VER)&&(_MSC_VER >= 1600)
+#pragma execution_character_set("utf-8")
+#endif
+
 StartSoftwareWidget::StartSoftwareWidget(QWidget *parent)
     : IWidget(parent)
     , ui(new Ui::StartSoftwareWidget)

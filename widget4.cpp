@@ -1,5 +1,10 @@
-#include "widget4.h"
+﻿#include "widget4.h"
 #include "ui_widget4.h"
+
+
+#if defined(_MSC_VER)&&(_MSC_VER >= 1600)
+#pragma execution_character_set("utf-8")
+#endif
 
 Widget4::Widget4(QWidget *parent)
     : IWidget(parent)

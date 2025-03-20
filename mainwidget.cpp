@@ -1,6 +1,10 @@
 ﻿#include "mainwidget.h"
 #include "ui_mainwidget.h"
 
+#if defined(_MSC_VER)&&(_MSC_VER >= 1600)
+#pragma execution_character_set("utf-8")
+#endif
+
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainWidget)
