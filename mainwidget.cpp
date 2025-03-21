@@ -39,6 +39,69 @@ MainWidget::MainWidget(QWidget *parent)
 
 }
 
+
+void MainWidget::loadConfig()
+{
+    // 读取文件
+    QString configPath = QCoreApplication::applicationDirPath() + "/config.json";
+    QFile file(configPath);
+    qDebug() << configPath;
+    if (!file.open(QIODevice::ReadOnly)) {
+        qDebug() << "无法打开配置文件";
+        return;
+    }
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    if (jsonData.startsWith(QByteArray::fromRawData("\xef\xbb\xbf", 3))) {
+        jsonData = jsonData.mid(3);
+    }
+
+    // 解析 JSON
+    QJsonParseError parseError;
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData, &parseError);
+    if (doc.isNull()) {
+        qDebug() << "JSON 解析失败，错误信息：" << parseError.errorString();
+        return;
+    }
+
+    // 解析 JSON 对象
+    QJsonObject jsonObj = doc.object();
+
+    // 处理 "softwareShow" 数组
+    QJsonArray softwareShowArray = jsonObj["softwareShow"].toArray();
+    for (const QJsonValue &value : softwareShowArray) {
+        QJsonObject software = value.toObject();
+        SoftwareInfo info;
+        info.name = software["name"].toString();
+        info.icon = software["icon"].toString();
+        info.path = software["path"].toString();
+        softwareShow.append(info);
+    }
+
+    // 处理 "softwareTool" 数组
+    QJsonArray softwareToolArray = jsonObj["softwareTool"].toArray();
+    for (const QJsonValue &value : softwareToolArray) {
+        QJsonObject software = value.toObject();
+        SoftwareInfo info;
+        info.name = software["name"].toString();
+        info.icon = software["icon"].toString();
+        info.path = software["path"].toString();
+        softwareTool.append(info);
+    }
+
+    // 处理 "softwareBase" 数组
+    QJsonArray softwareBaseArray = jsonObj["softwareBase"].toArray();
+    for (const QJsonValue &value : softwareBaseArray) {
+        QJsonObject software = value.toObject();
+        SoftwareInfo info;
+        info.name = software["name"].toString();
+        info.icon = software["icon"].toString();
+        info.path = software["path"].toString();
+        softwareBase.append(info);
+    }
+}
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
@@ -94,76 +157,26 @@ void MainWidget::initTop()
 void MainWidget::initMiddleVariables()
 {
 
-    // ====== 初始化 Show 软件描述 ======
-    softwareShowName.append(QString::fromUtf8("天智红方态势展示\n"));
-    softwareShowIcon.append(":/images/a1.jpg");
-    softwareShowURL.append("D:/WeChat/WeChat.exe");
-
-    softwareShowName.append(QString::fromUtf8("天智蓝方态势展示\n"));
-    softwareShowIcon.append(":/images/a2.jpg");
-    softwareShowURL.append("D:/WeChat/WeChat.exe");
-
-    softwareShowName.append(QString::fromUtf8("M太空军态势系统\n"));
-    softwareShowIcon.append(":/images/a3.jpg");
-    softwareShowURL.append("D:/WeChat/WeChat.exe");
-
-
-    // ====== 初始化 Tool 软件描述 ======
-    softwareToolName.append(QString::fromUtf8("天智航天\n想定编辑工具"));
-    softwareToolIcon.append(":/images/a1.jpg");
-    softwareToolURL.append("D:/WeChat/WeChat.exe");
-
-    softwareToolName.append(QString::fromUtf8("天智航天\n体系推演平台"));
-    softwareToolIcon.append(":/images/a2.jpg");
-    softwareToolURL.append("D:/WeChat/WeChat.exe");
-
-    softwareToolName.append(QString::fromUtf8("天智仿真导演台\n"));
-    softwareToolIcon.append(":/images/a3.jpg");
-    softwareToolURL.append("D:/WeChat/WeChat.exe");
-
-    softwareToolName.append(QString::fromUtf8("天智交战裁决工具\n"));
-    softwareToolIcon.append(":/images/a4.jpg");
-    softwareToolURL.append("D:/WeChat/WeChat.exe");
-
-    softwareToolName.append(QString::fromUtf8("天智航天\n体系分析评估工具"));
-    softwareToolIcon.append(":/images/a1.jpg");
-    softwareToolURL.append("D:/WeChat/WeChat.exe");
-
-
-
-    // ====== 初始化 Base 软件描述 ======
-    softwareBaseName.append(QString::fromUtf8("天智可视化通信\n交互工具"));
-    softwareBaseIcon.append(":/images/a1.jpg");
-    softwareBaseURL.append("D:/WeChat/WeChat.exe");
-
-    softwareBaseName.append(QString::fromUtf8("天智模型管理工具\n"));
-    softwareBaseIcon.append(":/images/a2.jpg");
-    softwareBaseURL.append("D:/WeChat/WeChat.exe");
-
-    softwareBaseName.append(QString::fromUtf8("天智模型封装开发工具\n"));
-    softwareBaseIcon.append(":/images/a3.jpg");
-    softwareBaseURL.append("D:/WeChat/WeChat.exe");
-
-
+    loadConfig();
     // ====== 初始化参数列表 ======
     scrollAreaWidth = 1100;
     scrollAreaHeight = 500;
 
     // 计算 Show 容器的框宽度和间距
-    int showCount = softwareShowName.size();
+    int showCount = softwareShow.size();
     int showFrameWidth = 250;
     int showSpacing = 170;
     //int showSpacing = (scrollAreaWidth - (showCount * showFrameWidth)) / (showCount-1);
 
     // 计算 Tool 容器的框宽度和间距
-    int toolCount = softwareToolName.size();
+    int toolCount = softwareTool.size();
     int toolFrameWidth = 200;
     int toolSpacing = 25;
     //int toolSpacing = (scrollAreaWidth - (toolCount * toolFrameWidth)) / (toolCount-1) ;
 
 
     // 计算 Base 容器的框宽度和间距
-    int baseCount = softwareBaseName.size();
+    int baseCount = softwareBase.size();
     int baseFrameWidth = 250;
     int baseSpacing = 170;
     //int baseSpacing = (scrollAreaWidth - (baseCount * baseFrameWidth)) / (baseCount-1) ;
@@ -205,8 +218,8 @@ void MainWidget::initMiddle()
     widgetNameList.append(QString::fromUtf8("仿真工具"));
     widgetNameList.append(QString::fromUtf8("模型与通信底座"));
 
-    QStringList normalImages = {":/images/u62.png", ":/images/u62.png", ":/images/u62.png"};
-    QStringList hoverImages = {":/images/u62_mouseOver.png", ":/images/u62_mouseOver.png", ":/images/u62_mouseOver.png"};
+    QString normalImages = ":/images/u62.png";
+    QString hoverImages = ":/images/u62_mouseOver.png";
 
     int buttonHeight = 100;  // 按钮的高度
     int buttonSpacing = 50;  // 按钮间距
@@ -215,34 +228,72 @@ void MainWidget::initMiddle()
     // 等分按钮的垂直位置
     int buttonY = buttonSpacing;
 
+
+
+    QButtonGroup *buttonGroup = new QButtonGroup(this); // 创建按钮组
+
+    // 设置按钮的选中方式为单选（只允许选择一个）
+    buttonGroup->setExclusive(true);
+
     for (int i = 0; i < 3; ++i) {
         // 创建按钮
         QPushButton *button = new QPushButton(widgetNameList[i], frameLeft);
         button->setFixedSize(frameLeftWidth * 0.9, buttonHeight);  // 设置按钮大小
         button->move(frameLeftWidth * 0.05, buttonY);  // 设置按钮位置（X轴居中，Y轴等分）
 
-        // 设置按钮样式，包括字体和背景
+        // 设置按钮的默认样式
         button->setStyleSheet(QString(R"(
-        QPushButton {
-            border: none;
-            background: transparent;
-            image: url(%1);
-            color: white;
-            font: bold 25px "SimHei";
-        }
-        QPushButton:hover {
-            image: url(%2);
-        }
-    )").arg(normalImages[i]).arg(hoverImages[i]));
+                QPushButton {
+                    border: none;
+                    background: transparent;
+                    image: url(%1);
+                    color: white;
+                    font: bold 25px "SimHei";
+                }
+                )").arg(normalImages));
 
         // 更新下一个按钮的位置
         buttonY += buttonHeight + buttonSpacing;
 
+        // 将按钮添加到按钮组中
+        buttonGroup->addButton(button, i);
+
         // 将按钮点击信号连接到槽函数，并传递按钮的索引（i）
-        connect(button, &QPushButton::clicked, [this, i]() {
+        connect(button, &QPushButton::clicked, [this, i, button, buttonGroup, normalImages, hoverImages]() {  // 在捕获列表中添加 buttonGroup
+            // 取消所有按钮的选中状态
+            foreach (QAbstractButton *btn, buttonGroup->buttons()) {
+                btn->setChecked(false);
+                // 恢复默认样式
+                btn->setStyleSheet(QString(R"(
+                QPushButton {
+                    border: none;
+                    background: transparent;
+                    image: url(%1);
+                    color: white;
+                    font: bold 25px "SimHei";
+                }
+            )").arg(normalImages));
+            }
+
+            // 设置当前按钮为选中状态，并改变样式
+            button->setChecked(true);
+            // 设置选中按钮的样式（比如加边框或改变背景颜色）
+            button->setStyleSheet(QString(R"(
+            QPushButton {
+                    border: none;
+                    background: transparent;
+                    image: url(%1);
+                    color: white;
+                    font: bold 25px "SimHei";
+            }
+        )").arg(hoverImages));
+
+            // 调用槽函数
             onChangeButtonClicked(i);  // 将按钮的索引作为参数传递给槽函数
         });
     }
+
+
 
 
 
@@ -288,7 +339,7 @@ void MainWidget::initMiddle()
 
         // 图标
         QLabel *iconLabel = new QLabel(frame);
-        QString imagePath = softwareShowIcon[i];
+        QString imagePath = softwareShow[i].icon;
         QSvgRenderer renderer(imagePath);
         QPixmap pixmap(renderer.defaultSize() * 3);
         pixmap.fill(Qt::transparent);
@@ -301,7 +352,7 @@ void MainWidget::initMiddle()
         vLayout->addWidget(iconLabel, 0, Qt::AlignCenter);
 
         // 名称标签
-        QLabel *nameLabel = new QLabel(softwareShowName[i], frame);
+        QLabel *nameLabel = new QLabel(softwareShow[i].name, frame);
         nameLabel->setAlignment(Qt::AlignCenter);
         nameLabel->setFont(QFont("SimHei", 15, QFont::Bold));
         nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
@@ -327,7 +378,7 @@ void MainWidget::initMiddle()
             "}"
             );
         connect(openButton, &QPushButton::clicked, this, [=]() {
-            QProcess::startDetached(softwareShowURL[i]);
+            QProcess::startDetached(softwareShow[i].path);
         });
 
 
@@ -372,7 +423,7 @@ void MainWidget::initMiddle()
 
         // 图标
         QLabel *iconLabel = new QLabel(frame);
-        QString imagePath = softwareToolIcon[i];
+        QString imagePath = softwareTool[i].icon;
         QSvgRenderer renderer(imagePath);
         QPixmap pixmap(renderer.defaultSize() * 3);
         pixmap.fill(Qt::transparent);
@@ -385,7 +436,7 @@ void MainWidget::initMiddle()
         vLayout->addWidget(iconLabel, 0, Qt::AlignCenter);
 
         // 名称标签
-        QLabel *nameLabel = new QLabel(softwareToolName[i], frame);
+        QLabel *nameLabel = new QLabel(softwareTool[i].name, frame);
         nameLabel->setAlignment(Qt::AlignCenter);
         nameLabel->setFont(QFont("Arial", 15, QFont::Bold));
         nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
@@ -411,7 +462,7 @@ void MainWidget::initMiddle()
             "}"
             );
         connect(openButton, &QPushButton::clicked, this, [=]() {
-            QProcess::startDetached(softwareShowURL[i]);
+            QProcess::startDetached(softwareTool[i].path);
         });
 
 
@@ -453,7 +504,7 @@ void MainWidget::initMiddle()
 
         // 图标
         QLabel *iconLabel = new QLabel(frame);
-        QString imagePath = softwareBaseIcon[i];
+        QString imagePath = softwareBase[i].icon;
         QSvgRenderer renderer(imagePath);
         QPixmap pixmap(renderer.defaultSize() * 3);
         pixmap.fill(Qt::transparent);
@@ -466,7 +517,7 @@ void MainWidget::initMiddle()
         vLayout->addWidget(iconLabel, 0, Qt::AlignCenter);
 
         // 名称标签
-        QLabel *nameLabel = new QLabel(softwareBaseName[i], frame);
+        QLabel *nameLabel = new QLabel(softwareBase[i].name, frame);
         nameLabel->setAlignment(Qt::AlignCenter);
         nameLabel->setFont(QFont("Arial", 15, QFont::Bold));
         nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
@@ -492,7 +543,7 @@ void MainWidget::initMiddle()
             "}"
             );
         connect(openButton, &QPushButton::clicked, this, [=]() {
-            QProcess::startDetached(softwareShowURL[i]);
+            QProcess::startDetached(softwareBase[i].path);
         });
 
 

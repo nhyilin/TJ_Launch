@@ -4,7 +4,6 @@
 #include "iwidget.h"
 #include "startsoftwarewidget.h"
 #include "widget4.h"
-#include "CustomLabel.h"
 
 #include <QWidget>
 
@@ -28,11 +27,14 @@
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QSvgRenderer>
-
+#include <QButtonGroup>
 #include <QScreen>
 #include <QResizeEvent>
 #include <QFont>
-
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -40,6 +42,12 @@ class MainWidget;
 }
 QT_END_NAMESPACE
 class StartSoftwareWidget;
+
+struct SoftwareInfo {
+    QString name;
+    QString icon;
+    QString path;
+};
 
 class MainWidget : public QWidget
 {
@@ -52,6 +60,7 @@ public:
 public:
     void resizeEvent(QResizeEvent *event);
 
+    void loadConfig();  //读取配置文件
     void initTop();
     //void initBottom();
     void initMiddle();
@@ -94,20 +103,7 @@ private slots:
 
 private:
 
-    QVector<QString> softwareShowName;  // 软件名
-    QVector<QString> softwareShowIcon;  // 软件图标
-    QVector<QString> softwareShowFileName;  // .exe 文件名
-    QVector<QString> softwareShowURL;   // .exe 路径
-
-    QVector<QString> softwareToolName;  // 软件名
-    QVector<QString> softwareToolIcon;  // 软件图标
-    QVector<QString> softwareToolFileName;  // .exe 文件名
-    QVector<QString> softwareToolURL;   // .exe 路径
-
-    QVector<QString> softwareBaseName;  // 软件名
-    QVector<QString> softwareBaseIcon;  // 软件图标
-    QVector<QString> softwareBaseFileName;  // .exe 文件名
-    QVector<QString> softwareBaseURL;   // .exe 路径
+    QVector<SoftwareInfo> softwareShow, softwareTool, softwareBase;
 
 private:    // 滚动区域
     QVector<int> currentPageIndex;  // 滚动界面索引
@@ -124,5 +120,6 @@ private:    // 滚动区域
 
 
 };
+
 #endif // MAINWIDGET_H
 
