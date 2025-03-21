@@ -48,22 +48,6 @@
      <height>520</height>
     </rect>
    </property>
-   <widget class="QFrame" name="frame">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>1400</width>
-      <height>520</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-   </widget>
   </widget>
   <widget class="QWidget" name="topWidget" native="true">
    <property name="geometry">
@@ -99,14 +83,14 @@
      <item>
       <widget class="QLabel" name="titlelabel_1">
        <property name="text">
-        <string>数据云平台智能监控系统</string>
+        <string>天智航天仿真工具平台</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="titlelabel_2">
        <property name="text">
-        <string>Data intelligent monitoring system</string>
+        <string>TZSpaceSimToolKit</string>
        </property>
       </widget>
      </item>
