@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>MainWidget</string>
   </property>
-  <widget class="QWidget" name="widget_3" native="true">
+  <widget class="QWidget" name="bottomWidget" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -22,13 +22,13 @@
      <height>200</height>
     </rect>
    </property>
-   <widget class="QFrame" name="functionFrame">
+   <widget class="QFrame" name="functionFrame_2">
     <property name="geometry">
      <rect>
       <x>390</x>
-      <y>40</y>
-      <width>631</width>
-      <height>131</height>
+      <y>30</y>
+      <width>731</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -42,14 +42,14 @@
   <widget class="QWidget" name="showWidget" native="true">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>0</x>
      <y>80</y>
-     <width>1300</width>
+     <width>1400</width>
      <height>520</height>
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="widget_1" native="true">
+  <widget class="QWidget" name="topWidget" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -58,42 +58,44 @@
      <height>80</height>
     </rect>
    </property>
-   <widget class="QLabel" name="titlelabel_1">
+   <widget class="QFrame" name="titleFrame">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>10</y>
-      <width>301</width>
-      <height>41</height>
+      <x>470</x>
+      <y>6</y>
+      <width>320</width>
+      <height>80</height>
      </rect>
     </property>
-    <property name="text">
-     <string>数据云平台智能监控系统</string>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>80</height>
+     </size>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="titlelabel_1">
+       <property name="text">
+        <string>天智航天仿真工具平台</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="titlelabel_2">
+       <property name="text">
+        <string>TZSpaceSimToolKit</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="QLabel" name="titlelabel_2">
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>50</y>
-      <width>291</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Data intelligent monitoring system</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QWidget" name="leftWidget" native="true">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>80</y>
-     <width>100</width>
-     <height>520</height>
-    </rect>
-   </property>
   </widget>
  </widget>
  <resources/>

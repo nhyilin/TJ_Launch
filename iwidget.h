@@ -1,4 +1,4 @@
-#ifndef IWIDGET_H
+﻿#ifndef IWIDGET_H
 #define IWIDGET_H
 
 #include <QWidget>
@@ -13,7 +13,6 @@
 #include <QPalette>
 #include <QPainter>
 #include <QPixmap>
-
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QScrollArea>
@@ -36,7 +35,9 @@ public:
     explicit IWidget(QWidget *parent = nullptr);
     ~IWidget();
 
+    virtual void initVariables() = 0;
     virtual void initMiddle() = 0;
+
 
 private:
     Ui::IWidget *ui;

@@ -1,0 +1,63 @@
+{
+    "softwareShow": [
+        {
+            "name": "天智红方态势展示",
+            "icon": ":/images/a1.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        },
+        {
+            "name": "天智蓝方态势展示",
+            "icon": ":/images/a2.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        },
+        {
+            "name": "M太空军态势系统",
+            "icon": ":/images/a3.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        }
+    ],
+    "softwareTool": [
+        {
+            "name": "天智航天\n想定编辑工具",
+            "icon": ":/images/a1.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        },
+        {
+            "name": "天智航天\n体系推演平台",
+            "icon": ":/images/a2.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        },
+        {
+            "name": "天智仿真导演台",
+            "icon": ":/images/a3.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        },
+        {
+            "name": "天智交战裁决工具",
+            "icon": ":/images/a4.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        },
+        {
+            "name": "天智航天\n体系分析评估工具",
+            "icon": ":/images/a1.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        }
+    ],
+    "softwareBase": [
+        {
+            "name": "天智可视化通信\n交互工具",
+            "icon": ":/images/a1.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        },
+        {
+            "name": "天智模型管理工具",
+            "icon": ":/images/a2.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        },
+        {
+            "name": "天智模型封装开发工具",
+            "icon": ":/images/a3.jpg",
+            "path": "D:/WeChat/WeChat.exe"
+        }
+    ]
+}

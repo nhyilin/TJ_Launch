@@ -1,57 +1,37 @@
-﻿#ifndef STARTSOFTWAREWIDGET_H
-#define STARTSOFTWAREWIDGET_H
-
-#include <QWidget>
-#include "mainwidget.h"
+#ifndef WIDGET4_H
+#define WIDGET4_H
 #include "iwidget.h"
 
+#include <QWidget>
 #include <QApplication>
-#include <QVBoxLayout>
-#include <QLineEdit>
-#include <QPushButton>
 #include <QLabel>
-#include <QPropertyAnimation>
-#include <QGraphicsDropShadowEffect>
-#include <QPalette>
-#include <QPainter>
-#include <QPixmap>
-#include <QFrame>
-#include <QHBoxLayout>
-#include <QScrollArea>
-#include <QScrollBar>
-#include <QMovie>
-#include <QTimer>
-#include <QProcess>
-#include <QSplitter>
-#include <QStackedWidget>
 #include <QSvgRenderer>
+#include <QPixmap>
+#include <QPainter>
+#include <QDebug>
 
 namespace Ui {
-class StartSoftwareWidget;
+class Widget4;
 }
 
-class StartSoftwareWidget : public IWidget
+class Widget4 : public IWidget
 {
     Q_OBJECT
 
 public:
-    explicit StartSoftwareWidget(QWidget *parent = nullptr);
-    ~StartSoftwareWidget();
+    explicit Widget4(QWidget *parent = nullptr);
+    ~Widget4();
 
-public:
     virtual void initMiddle();
     virtual void initVariables();
 
+public:
     bool eventFilter(QObject *watched, QEvent *event);  // 捕获系统描述框
-
     void smoothScrollTo(int targetPosition);    // 增加滚动效果
-
 private slots:
     void scrollLeft();   // 左侧滚动
     void scrollRight();  // 右侧滚动
 
-private:
-    Ui::StartSoftwareWidget *ui;
 
 private:    // middle 参数
     QScrollArea *scrollArea;  // 滚动区域
@@ -69,10 +49,12 @@ private:    // middle 参数
     int scrollAreaHeight;   // 滚动区域高度
 
     QVector<QString> softwareName;  // 软件名
-    QVector<QString> softwareEnglishName;  // 软件名
+    QVector<QString> softwareEnglishName;  // 软件英文名
     QVector<QString> softwareIcon;  // 软件图标
     QVector<QString> softwareFileName;  // .exe 文件名
     QVector<QString> softwareURL;   // .exe 路径
+private:
+    Ui::Widget4 *ui;
 };
 
-#endif // STARTSOFTWAREWIDGET_H
+#endif // WIDGET4_H
