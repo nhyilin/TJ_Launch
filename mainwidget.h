@@ -2,8 +2,11 @@
 #define MAINWIDGET_H
 
 #include "iwidget.h"
-#include "startsoftwarewidget.h"
-#include "widget4.h"
+
+#include "partwidget1.h"
+#include "partwidget2.h"
+#include "partwidget3.h"
+#include "partwidgettest.h"
 
 #include <QWidget>
 
@@ -43,11 +46,7 @@ class MainWidget;
 QT_END_NAMESPACE
 class StartSoftwareWidget;
 
-struct SoftwareInfo {
-    QString name;
-    QString icon;
-    QString path;
-};
+
 
 class MainWidget : public QWidget
 {
@@ -60,7 +59,7 @@ public:
 public:
     void resizeEvent(QResizeEvent *event);
 
-    void loadConfig();  //读取配置文件
+
     void initTop();
     //void initBottom();
     void initMiddle();
@@ -70,9 +69,14 @@ public:
 private:
     Ui::MainWidget *ui;
     QStackedWidget *stackedWidget;      //存放界面(暂时不用)
-    IWidget* startSoftwareWidget;       //界面1
-    IWidget* widget3;                   //测试界面2
-    IWidget* widget4;                   //测试界面2
+    StartSoftwareWidget* startSoftwareWidget;       //界面1
+    PartWidget1* partWidget1;                   //测试界面2
+    PartWidget2* partWidget2;                   //测试界面2
+    PartWidget3* partWidget3;                   //测试界面2
+    PartWidgetTest* partWidgetTest;                   //测试界面2
+private:    //left 参数
+    QVector<QPushButton*> changePushButton;
+    QVector<QString> changeButtonIcon;
 
 private:    // top 参数
     QLabel *u2ImageLabel;  // 用于显示图片
@@ -80,11 +84,14 @@ private:    // top 参数
     QLabel *titlelabel_1;  // 声明 titlelabel_1
     QLabel *titlelabel_2;  // 声明 titlelabel_2
 
+private slots:
+    void onChangeButtonClicked(int control);
+/*
 // =========== middle 参数==============
 public:
     //void initMiddle();
     void initMiddleVariables();
-
+    void loadConfig();  //读取配置文件
     bool eventFilter(QObject *watched, QEvent *event);  // 捕获系统描述框
 
     void smoothScrollTo(int targetPosition);    // 增加滚动效果
@@ -98,8 +105,8 @@ public:
     void scrollShow();
     void scrollTool();
     void scrollBase();
-private slots:
-    void onChangeButtonClicked(int control);
+
+
 
 private:
 
@@ -117,7 +124,7 @@ private:    // 滚动区域
     QHBoxLayout *layout;      // 水平布局
 
     int frameHeight;    // 框高度
-
+*/
 
 };
 

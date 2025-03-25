@@ -1,5 +1,5 @@
 ﻿#include "mainwidget.h"
-#include "startsoftwarewidget.h"
+
 
 #include <QApplication>
 

@@ -15,5 +15,6 @@
         <file>images/u8_mouseOver.svg</file>
         <file>images/u62.png</file>
         <file>images/u62_mouseOver.png</file>
+        <file>images/u62_click.png</file>
     </qresource>
 </RCC>

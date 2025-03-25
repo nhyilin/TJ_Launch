@@ -1,4 +1,5 @@
-﻿#include "mainwidget.h"
+﻿
+#include "mainwidget.h"
 #include "ui_mainwidget.h"
 
 #if defined(_MSC_VER)&&(_MSC_VER >= 1600)
@@ -10,9 +11,10 @@ MainWidget::MainWidget(QWidget *parent)
     , ui(new Ui::MainWidget)
 {
     ui->setupUi(this);
+
+
     QScreen *screen = QApplication::primaryScreen();
     QRect screenGeometry = screen->availableGeometry();  // 获取可用屏幕尺寸
-
 
     // 设置主窗口的大小为屏幕的 95%
     int width = screenGeometry.width() * 0.99;
@@ -28,7 +30,7 @@ MainWidget::MainWidget(QWidget *parent)
     setWindowTitle("天智首页");
 
     //初始化参数列表
-    initMiddleVariables();
+    //initMiddleVariables();
 
     // 初始化界面 上
     initTop();
@@ -39,69 +41,6 @@ MainWidget::MainWidget(QWidget *parent)
 
 }
 
-
-void MainWidget::loadConfig()
-{
-    // 读取文件
-    QString configPath = QCoreApplication::applicationDirPath() + "/config.json";
-    QFile file(configPath);
-    qDebug() << configPath;
-    if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "无法打开配置文件";
-        return;
-    }
-
-    QByteArray jsonData = file.readAll();
-    file.close();
-
-    if (jsonData.startsWith(QByteArray::fromRawData("\xef\xbb\xbf", 3))) {
-        jsonData = jsonData.mid(3);
-    }
-
-    // 解析 JSON
-    QJsonParseError parseError;
-    QJsonDocument doc = QJsonDocument::fromJson(jsonData, &parseError);
-    if (doc.isNull()) {
-        qDebug() << "JSON 解析失败，错误信息：" << parseError.errorString();
-        return;
-    }
-
-    // 解析 JSON 对象
-    QJsonObject jsonObj = doc.object();
-
-    // 处理 "softwareShow" 数组
-    QJsonArray softwareShowArray = jsonObj["softwareShow"].toArray();
-    for (const QJsonValue &value : softwareShowArray) {
-        QJsonObject software = value.toObject();
-        SoftwareInfo info;
-        info.name = software["name"].toString();
-        info.icon = software["icon"].toString();
-        info.path = software["path"].toString();
-        softwareShow.append(info);
-    }
-
-    // 处理 "softwareTool" 数组
-    QJsonArray softwareToolArray = jsonObj["softwareTool"].toArray();
-    for (const QJsonValue &value : softwareToolArray) {
-        QJsonObject software = value.toObject();
-        SoftwareInfo info;
-        info.name = software["name"].toString();
-        info.icon = software["icon"].toString();
-        info.path = software["path"].toString();
-        softwareTool.append(info);
-    }
-
-    // 处理 "softwareBase" 数组
-    QJsonArray softwareBaseArray = jsonObj["softwareBase"].toArray();
-    for (const QJsonValue &value : softwareBaseArray) {
-        QJsonObject software = value.toObject();
-        SoftwareInfo info;
-        info.name = software["name"].toString();
-        info.icon = software["icon"].toString();
-        info.path = software["path"].toString();
-        softwareBase.append(info);
-    }
-}
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
@@ -153,7 +92,7 @@ void MainWidget::initTop()
     ui->titlelabel_2->setAlignment(Qt::AlignCenter);
 
 }
-
+/*
 void MainWidget::initMiddleVariables()
 {
 
@@ -192,10 +131,11 @@ void MainWidget::initMiddleVariables()
 
 }
 
-
+*/
 
 void MainWidget::initMiddle()
 {
+
 
     int showWidgetWidth = ui->showWidget->width();
     int showWidgetHeight = ui->showWidget->height();
@@ -210,17 +150,60 @@ void MainWidget::initMiddle()
     frameRight->setGeometry(frameLeftWidth, showWidgetHeight*0.1, frameRightWidth, showWidgetHeight);
 
 
+    // ====== 初始化界面 =======
+    stackedWidget = new QStackedWidget(frameRight);
+
+    // 获取frameRight的大小
+    QRect frameRect = frameRight->rect();
+
+    int x = (frameRect.width() - stackedWidget->width()) / 2; // 水平居中
+    int y = (frameRect.height() - stackedWidget->height()) / 2; // 垂直居中
+
+    stackedWidget->move(0, 50);
+
+
+    // 界面初始化
+    partWidget1 = new PartWidget1();
+    partWidget2 = new PartWidget2();
+    partWidget3 = new PartWidget3();
+
+    partWidgetTest = new PartWidgetTest();
+
+
+    // 界面入栈
+    //stackedWidget->addWidget(startSoftwareWidget);
+    stackedWidget->addWidget(partWidgetTest);
+    stackedWidget->addWidget(partWidget1);
+    stackedWidget->addWidget(partWidget2);
+    stackedWidget->addWidget(partWidget3);
+
+
+
+    // 多态：存储子类界面的容器
+    //changeWidget.append(startSoftwareWidget);
+    //changeWidget.append(partwidget2);
+    //changeWidget.append(partWidgetTest);
+
+    // 设置当前界面
+    stackedWidget->setCurrentWidget(partWidget1);
+
+
+
+
+
+
+
     // ============================================================================
 
     QVector<QString> widgetNameList;
 
-    widgetNameList.append(QString::fromUtf8("态势展示"));
-    widgetNameList.append(QString::fromUtf8("仿真工具"));
-    widgetNameList.append(QString::fromUtf8("模型与通信底座"));
+    widgetNameList.append(QString::fromUtf8("展示"));
+    widgetNameList.append(QString::fromUtf8("工具"));
+    widgetNameList.append(QString::fromUtf8("基础"));
 
     QString normalImages = ":/images/u62.png";
     QString hoverImages = ":/images/u62_mouseOver.png";
-
+    QString clickImages = ":/images/u62_click.png";
     int buttonHeight = 100;  // 按钮的高度
     int buttonSpacing = 50;  // 按钮间距
     int totalHeight = frameLeft->height() - 2 * buttonSpacing;  // 使用 frameLeft 的高度
@@ -250,7 +233,10 @@ void MainWidget::initMiddle()
                     color: white;
                     font: bold 25px "SimHei";
                 }
-                )").arg(normalImages));
+                QPushButton:hover {
+                    image: url(%2);
+                }
+            )").arg(normalImages, hoverImages));
 
         // 更新下一个按钮的位置
         buttonY += buttonHeight + buttonSpacing;
@@ -259,7 +245,7 @@ void MainWidget::initMiddle()
         buttonGroup->addButton(button, i);
 
         // 将按钮点击信号连接到槽函数，并传递按钮的索引（i）
-        connect(button, &QPushButton::clicked, [this, i, button, buttonGroup, normalImages, hoverImages]() {  // 在捕获列表中添加 buttonGroup
+        connect(button, &QPushButton::clicked, [this, i, button, buttonGroup, normalImages, hoverImages, clickImages]() {  // 在捕获列表中添加 buttonGroup
             // 取消所有按钮的选中状态
             foreach (QAbstractButton *btn, buttonGroup->buttons()) {
                 btn->setChecked(false);
@@ -272,7 +258,10 @@ void MainWidget::initMiddle()
                     color: white;
                     font: bold 25px "SimHei";
                 }
-            )").arg(normalImages));
+                QPushButton:hover {
+                    image: url(%2);
+                }
+            )").arg(normalImages, hoverImages));
             }
 
             // 设置当前按钮为选中状态，并改变样式
@@ -283,10 +272,13 @@ void MainWidget::initMiddle()
                     border: none;
                     background: transparent;
                     image: url(%1);
-                    color: white;
+                    color: #00FFF0;
                     font: bold 25px "SimHei";
             }
-        )").arg(hoverImages));
+                QPushButton:hover {
+                    image: url(%2);
+                }
+            )").arg(clickImages, hoverImages));
 
             // 调用槽函数
             onChangeButtonClicked(i);  // 将按钮的索引作为参数传递给槽函数
@@ -294,283 +286,10 @@ void MainWidget::initMiddle()
     }
 
 
-
-
-
-    //================================================================
-    frameHeight = 350;
-    // ====== 滚动区域初始化 ======
-    scrollArea = new QScrollArea(frameRight);
-    scrollArea->setFixedSize(scrollAreaWidth, scrollAreaHeight);
-    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    scrollArea->setStyleSheet("QScrollArea { background: transparent; border: none; }");
-
-    // ====== 创建滚动内容窗口 ======
-    scrollWidget = new QWidget();
-    layout = new QHBoxLayout(scrollWidget);
-    layout->setSpacing(0);
-    layout->setAlignment(Qt::AlignCenter);  // 让内容居中
-
-
-    // === Show容器 ===
-    int showFrameWidth = frameWidths[0];
-
-
-    for (int i = 0; i < frameCounts[0]; ++i) {
-        QFrame *frame = new QFrame(scrollWidget);
-        frame->setFixedSize(showFrameWidth, frameHeight);
-        frame->setStyleSheet("border: none;");
-
-        QLabel *backgroundLabel = new QLabel(frame);
-        backgroundLabel->setGeometry(0, 0, showFrameWidth, frameHeight);
-
-        QPixmap backgroundPixmap(":/images/u8.jpg");
-        //backgroundLabel->setPixmap(backgroundPixmap.scaled(showFrameWidth, frameHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        backgroundLabel->setPixmap(backgroundPixmap.scaled(showFrameWidth, frameHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-        backgroundLabel->setStyleSheet("background: transparent;");
-        backgroundLabel->lower();
-        backgroundLabel->show();
-
-
-        QVBoxLayout *vLayout = new QVBoxLayout(frame);
-        vLayout->setAlignment(Qt::AlignCenter);
-        vLayout->setSpacing(10);
-
-        // 图标
-        QLabel *iconLabel = new QLabel(frame);
-        QString imagePath = softwareShow[i].icon;
-        QSvgRenderer renderer(imagePath);
-        QPixmap pixmap(renderer.defaultSize() * 3);
-        pixmap.fill(Qt::transparent);
-        QPainter painter(&pixmap);
-        renderer.render(&painter);
-        iconLabel->setPixmap(pixmap);
-        iconLabel->setFixedSize(pixmap.size());
-        iconLabel->setAlignment(Qt::AlignCenter);
-
-        vLayout->addWidget(iconLabel, 0, Qt::AlignCenter);
-
-        // 名称标签
-        QLabel *nameLabel = new QLabel(softwareShow[i].name, frame);
-        nameLabel->setAlignment(Qt::AlignCenter);
-        nameLabel->setFont(QFont("SimHei", 15, QFont::Bold));
-        nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
-        vLayout->addWidget(nameLabel, 0, Qt::AlignCenter);
-
-        // ========== 进入系统按钮 ==========
-        QPushButton *openButton = new QPushButton(QString::fromUtf8("进入系统"), frame);
-        openButton->setFixedSize(120, 30);  // 调整按钮为更扁的比例（宽：120，高：30）
-        openButton->setStyleSheet(
-            "QPushButton {"
-            "   color: #00BFFF;"
-            "   background: transparent;"
-            "   border: 2px solid #00BFFF;"
-            "   border-radius: 10px;"  // 圆角
-            "   padding: 5px 10px;"
-            "}"
-            "QPushButton:hover {"
-            "   background-color: rgba(30, 144, 255, 0.2);"
-            "}"
-            "QPushButton:pressed {"
-            "   background-color: rgba(30, 144, 255, 0.3);"
-            "   padding-left: 8px; padding-top: 8px;"
-            "}"
-            );
-        connect(openButton, &QPushButton::clicked, this, [=]() {
-            QProcess::startDetached(softwareShow[i].path);
-        });
-
-
-        vLayout->addWidget(openButton, 0, Qt::AlignCenter);  // **让按钮居中**
-
-
-        frame->setLayout(vLayout);
-        frame->installEventFilter(this);
-
-        // 为每个框添加间距
-        if (i > 0 && i < frameCounts[0]) {
-            layout->addSpacerItem(new QSpacerItem(frameSpacings[0], 0, QSizePolicy::Fixed, QSizePolicy::Fixed));  // 添加间距
-        }
-        else if(i == frameCounts[0]){
-            layout->addSpacerItem(new QSpacerItem(50, 0, QSizePolicy::Fixed, QSizePolicy::Fixed));
-        }
-
-        layout->addWidget(frame);  // 添加到滚动布局
-    }
-
-
-    // === Tool容器 ===
-
-    int toolFrameWidth = frameWidths[1];
-    for (int i = 0; i < frameCounts[1]; ++i) {
-        QFrame *frame = new QFrame(scrollWidget);
-        frame->setFixedSize(toolFrameWidth, frameHeight);
-        frame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        frame->setStyleSheet("border: none;");
-
-        QLabel *backgroundLabel = new QLabel(frame);
-        backgroundLabel->setGeometry(0, 0, toolFrameWidth, frameHeight);
-        QPixmap backgroundPixmap(":/images/u8.jpg");
-        backgroundLabel->setPixmap(backgroundPixmap.scaled(toolFrameWidth, frameHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-        backgroundLabel->setStyleSheet("background: transparent;");
-        backgroundLabel->lower();
-        backgroundLabel->show();
-
-        QVBoxLayout *vLayout = new QVBoxLayout(frame);
-        vLayout->setAlignment(Qt::AlignCenter);
-        vLayout->setSpacing(10);
-
-        // 图标
-        QLabel *iconLabel = new QLabel(frame);
-        QString imagePath = softwareTool[i].icon;
-        QSvgRenderer renderer(imagePath);
-        QPixmap pixmap(renderer.defaultSize() * 3);
-        pixmap.fill(Qt::transparent);
-        QPainter painter(&pixmap);
-        renderer.render(&painter);
-        iconLabel->setPixmap(pixmap);
-        iconLabel->setFixedSize(pixmap.size());
-        iconLabel->setAlignment(Qt::AlignCenter);
-
-        vLayout->addWidget(iconLabel, 0, Qt::AlignCenter);
-
-        // 名称标签
-        QLabel *nameLabel = new QLabel(softwareTool[i].name, frame);
-        nameLabel->setAlignment(Qt::AlignCenter);
-        nameLabel->setFont(QFont("Arial", 15, QFont::Bold));
-        nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
-        vLayout->addWidget(nameLabel, 0, Qt::AlignCenter);
-
-        // ========== 进入系统按钮 ==========
-        QPushButton *openButton = new QPushButton(QString::fromUtf8("进入系统"), frame);
-        openButton->setFixedSize(120, 30);  // 调整按钮为更扁的比例（宽：120，高：30）
-        openButton->setStyleSheet(
-            "QPushButton {"
-            "   color: #00BFFF;"
-            "   background: transparent;"
-            "   border: 2px solid #00BFFF;"
-            "   border-radius: 10px;"  // 圆角
-            "   padding: 5px 10px;"
-            "}"
-            "QPushButton:hover {"
-            "   background-color: rgba(30, 144, 255, 0.2);"
-            "}"
-            "QPushButton:pressed {"
-            "   background-color: rgba(30, 144, 255, 0.3);"
-            "   padding-left: 8px; padding-top: 8px;"
-            "}"
-            );
-        connect(openButton, &QPushButton::clicked, this, [=]() {
-            QProcess::startDetached(softwareTool[i].path);
-        });
-
-
-
-        vLayout->addWidget(openButton, 0, Qt::AlignCenter);
-
-        frame->setLayout(vLayout);
-        frame->installEventFilter(this);
-
-        // 为每个框添加间距
-        if (i > 0 && i < frameCounts[1]) {
-            layout->addSpacerItem(new QSpacerItem(frameSpacings[1], 50, QSizePolicy::Fixed, QSizePolicy::Fixed));  // 添加间距
-        }
-        else if(i == frameCounts[1]){
-            layout->addSpacerItem(new QSpacerItem(50, 50, QSizePolicy::Fixed, QSizePolicy::Fixed));
-        }
-
-        layout->addWidget(frame);  // 添加到滚动布局
-    }
-
-    // === Base容器 ===
-    int baseFrameWidth = frameWidths[2];
-    for (int i = 0; i < frameCounts[2]; ++i) {
-        QFrame *frame = new QFrame(scrollWidget);
-        frame->setFixedSize(baseFrameWidth, frameHeight);
-        frame->setStyleSheet("border: none;");
-
-        QLabel *backgroundLabel = new QLabel(frame);
-        backgroundLabel->setGeometry(0, 0, baseFrameWidth, frameHeight);
-        QPixmap backgroundPixmap(":/images/u8.jpg");
-        backgroundLabel->setPixmap(backgroundPixmap.scaled(baseFrameWidth, frameHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-        backgroundLabel->setStyleSheet("background: transparent;");
-        backgroundLabel->lower();
-        backgroundLabel->show();
-
-        QVBoxLayout *vLayout = new QVBoxLayout(frame);
-        vLayout->setAlignment(Qt::AlignCenter);
-        vLayout->setSpacing(10);
-
-        // 图标
-        QLabel *iconLabel = new QLabel(frame);
-        QString imagePath = softwareBase[i].icon;
-        QSvgRenderer renderer(imagePath);
-        QPixmap pixmap(renderer.defaultSize() * 3);
-        pixmap.fill(Qt::transparent);
-        QPainter painter(&pixmap);
-        renderer.render(&painter);
-        iconLabel->setPixmap(pixmap);
-        iconLabel->setFixedSize(pixmap.size());
-        iconLabel->setAlignment(Qt::AlignCenter);
-
-        vLayout->addWidget(iconLabel, 0, Qt::AlignCenter);
-
-        // 名称标签
-        QLabel *nameLabel = new QLabel(softwareBase[i].name, frame);
-        nameLabel->setAlignment(Qt::AlignCenter);
-        nameLabel->setFont(QFont("Arial", 15, QFont::Bold));
-        nameLabel->setStyleSheet("color: white; background: transparent; border: none;");
-        vLayout->addWidget(nameLabel, 0, Qt::AlignCenter);
-
-        // ========== 进入系统按钮 ==========
-        QPushButton *openButton = new QPushButton(QString::fromUtf8("进入系统"), frame);
-        openButton->setFixedSize(120, 30);  // 调整按钮为更扁的比例（宽：120，高：30）
-        openButton->setStyleSheet(
-            "QPushButton {"
-            "   color: #00BFFF;"
-            "   background: transparent;"
-            "   border: 2px solid #00BFFF;"
-            "   border-radius: 10px;"  // 圆角
-            "   padding: 5px 10px;"
-            "}"
-            "QPushButton:hover {"
-            "   background-color: rgba(30, 144, 255, 0.2);"
-            "}"
-            "QPushButton:pressed {"
-            "   background-color: rgba(30, 144, 255, 0.3);"
-            "   padding-left: 8px; padding-top: 8px;"
-            "}"
-            );
-        connect(openButton, &QPushButton::clicked, this, [=]() {
-            QProcess::startDetached(softwareBase[i].path);
-        });
-
-
-        vLayout->addWidget(openButton, 0, Qt::AlignCenter);
-
-        frame->setLayout(vLayout);
-        frame->installEventFilter(this);
-
-        // 为每个框添加间距
-        // 为每个框添加间距
-        if (i > 0 && i < frameCounts[2]) {
-            layout->addSpacerItem(new QSpacerItem(frameSpacings[2], 0, QSizePolicy::Fixed, QSizePolicy::Fixed));  // 添加间距
-        }
-
-
-        layout->addWidget(frame);  // 添加到滚动布局
-    }
-
-    // 设置滚动区域布局
-    scrollWidget->setLayout(layout);
-    scrollArea->setWidget(scrollWidget);
-    scrollWidget->setStyleSheet("background: transparent;");
-    scrollArea->setWidgetResizable(true);
 }
 
 
-
+/*
 // ========== 捕获系统描述框 ==========
 bool MainWidget::eventFilter(QObject *watched, QEvent *event)
 {
@@ -596,6 +315,7 @@ bool MainWidget::eventFilter(QObject *watched, QEvent *event)
     }
 
     return QWidget::eventFilter(watched, event);
+
 }
 
 
@@ -614,23 +334,32 @@ void MainWidget::scrollBase() {
     int targetPosition = currentPageIndex[2];
     smoothScrollTo(targetPosition);
 }
+*/
 void MainWidget::onChangeButtonClicked(int control)
 {
+
     switch (control) {
     case 0:
-        scrollShow();
+        stackedWidget->setCurrentWidget(partWidget1);  // 切换到界面 1
+        partWidget1->startAnimation();
+        //scrollShow();
         break;
-    case 1:
-        scrollTool();
+    case 1:{
+
+        stackedWidget->setCurrentWidget(partWidget2);
+        partWidget2->startAnimation();
         break;
+    }
     case 2:
-        scrollBase();
+        stackedWidget->setCurrentWidget(partWidget3);  // 切换到界面 2
+        partWidget3->startAnimation();
+        //scrollBase();
         break;
     default:
         break;
     }
 }
-
+/*
 // ========== 创建动画 ==========
 void MainWidget::smoothScrollTo(int targetPosition)
 {
